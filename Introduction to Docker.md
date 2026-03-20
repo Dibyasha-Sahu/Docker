@@ -81,5 +81,21 @@ Stop and remove a container
           - docker rm <Container_Id> (remove)
 
 
+## Task 4: Explore
+
+Run a container in detached mode — what's different?
+
+         - docker run -d ngnix ( " You don’t see the container’s output directly in your terminal. Instead, you get the container ID. ")
+
+Give a container a custom name
+
+         - docker run -d --name mynginx nginx 
+
+Map a port from the container to your host
+
+         - docker run -d -p 80:80 --name webserver nginx
+
+
+
 
 
