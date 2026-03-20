@@ -90,4 +90,102 @@ Write in your notes: What are layers and why does Docker use them?
 
              Smaller downloads: Only new or changed layers are pulled.
 
-             Portability: Layers can be distributed and reused across different images.   
+             Portability: Layers can be distributed and reused across different images.  
+
+
+## Task 3: Container Lifecycle
+
+Create a container (without starting it)
+
+      - docker create --name lifecyle-test ubuntu
+
+Start the container
+
+     - docker start lifecycle-test
+     
+Pause it and check status
+
+     - docker pause lifecycle-test
+
+        = doker ps ( shows Paused status.)
+
+Unpause it
+
+    -  docker unpause lifecycle-test
+
+      = docker ps ( shows Up again.)
+
+Stop it
+
+    - docker stop lifecycle-test
+
+      = docker ps -a ( shows Exited status.)
+
+Restart it
+
+    - docker restart lifecycle-test
+
+       = docker ps (shows Up.)
+
+Kill it
+
+     - docker kill lifecycle-test
+
+        = docker ps -a → shows Exited (0) or similar.
+
+Remove the container
+
+    - docker rm lifecycle-test
+
+      = docker ps -a (it’s gone.)
+
+
+## Task 4: Working with Running Containers
+
+Run an Nginx container in detached mode
+     
+     - docker run -d --name mine_nginx -p 8080:80 nginx
+     
+View its logs
+
+     - docker logs mine_nginx(or container_id)
+
+View real-time logs (follow mode)
+
+     - docker logs -f mine_nginx
+     
+Exec into the container and look around the filesystem
+
+     - docker exec -it mine_nginx bash
+     
+Run a single command inside the container without entering it
+
+     - docker exec mine_nginx ls /usr/share/nginx/html
+
+Inspect the container — find its IP address, port mappings, and mounts
+
+      - docker inspect mine_nginx
+
+
+## Task 5: Cleanup
+
+
+Stop all running containers in one command
+
+     - docker stop $(docker ps -q)
+     
+Remove all stopped containers in one command
+
+     - docker ps $(docker ps -aq)
+     
+Remove unused images
+
+     - docker image prune -a
+
+Check how much disk space Docker is using
+
+     - docker system df
+
+    
+
+
