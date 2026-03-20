@@ -95,6 +95,14 @@ Map a port from the container to your host
 
          - docker run -d -p 80:80 --name webserver nginx
 
+Check logs of a running container
+
+         - docker logs webserver (See what the container is printing)
+
+Run a command inside a running container
+
+         - docker exec -it webserver(container_id) bash
+
 
 
 
