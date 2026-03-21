@@ -109,7 +109,10 @@ Edit the index.html on your host — refresh the browser
               <head><title>My Test Page</title></head>
               <body><h1>Hello Everyone from Bind Mount!</h1></body>
             </html>
+            
+ Volumes → Docker manages the storage, good for persistence (databases).
 
+Bind mounts → You manage the storage, good for live editing (web development).
 
 Task 4: Docker Networking Basics
 List all Docker networks on your machine
