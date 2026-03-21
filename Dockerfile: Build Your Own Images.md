@@ -228,4 +228,61 @@ Build the image — verify that ignored files are not included
            docker run -d -p 8080:80 my-website:v2
 
 
-       
+## Task 6: Build Optimization
+
+Build an image, then change one line and rebuild — notice how Docker uses cache
+
+     - mkdir cache-image
+     - cd cache-image
+     - notepad Dockerfile
+            FROM ubuntu:latest
+            RUN apt-get update && apt-get install -y curl
+            COPY index.html /usr/share/nginx/html/index.html
+
+      - notepad index.html
+            <html>
+              <body>
+                <h1>Welcome to My Website!</h1>
+                <p>This is served by Nginx inside Docker.</p>
+              </body>
+            </html>
+
+      - docker build -t cache-image:v1 .
+
+      ## It will show somthing like this on fresh creation:
+
+           Step 1/3 : FROM ubuntu:latest
+                         ---> 2dc39ba059dc
+                        Step 2/3 : RUN apt-get update && apt-get install -y curl
+                         ---> Running in 123abc
+                         ---> 456def
+                        Step 3/3 : COPY index.html /usr/share/nginx/html/index.html
+                         ---> 789ghi
+                        Successfully built 789ghi
+                        Successfully tagged cache-demo:v1
+
+      
+
+
+Reorder your Dockerfile so that frequently changing lines come last
+
+      - FROM ubuntu:latest
+        COPY index.html /usr/share/nginx/html/index.html
+        RUN apt-get update && apt-get install -y curl
+
+        -docker build -t chache-image:v3 .
+        
+
+Write in your notes: Why does layer order matter for build speed?
+
+      - Docker builds in layers.
+
+       If one layer changes, all later layers rebuild.
+      
+       Put stable steps first (like installing packages).
+      
+       Put changing steps last (like copying source code).
+      
+       This keeps builds fast by reusing cached layers.
+
+       - Rule of thumb: Stable first, changing last → faster builds.
