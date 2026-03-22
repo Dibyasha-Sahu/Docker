@@ -167,3 +167,31 @@ Can they ping each other by name now?
 Write in your notes: Why does custom networking allow name-based communication but the default bridge doesn't?
 
     -  custom networks add Docker’s DNS service, so containers can talk by name. The default bridge is more limited and only supports IP‑based communication.
+
+
+## Task 6: Put It Together
+
+Create a custom network
+
+     - docker network create --driver bridge my-app-net
+
+Run a database container (MySQL) on that network with a volume for data
+
+      - docker volume create my-db-data
+
+            = docker run -d --name my-db \
+              --network my-app-net \
+              -e MYSQL_ROOT_PASSWORD=secret \
+              -v my-db-data:/var/lib/mysql \
+              mysql
+
+Run an app container (use any image) on the same network
+
+      = docker run -dit --name my-app \
+        --network my-app-net \
+        busybox sh
+
+Verify the app container can reach the database by container name
+
+     - docker exec -it my-app ping my-db
+         = Yes it works
