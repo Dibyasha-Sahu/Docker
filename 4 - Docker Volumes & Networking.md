@@ -112,7 +112,7 @@ Edit the index.html on your host — refresh the browser
             
  Volumes → Docker manages the storage, good for persistence (databases).
 
-Bind mounts → You manage the storage, good for live editing (web development).
+ Bind mounts → You manage the storage, good for live editing (web development).
 
 ## Task 4: Docker Networking 
 
@@ -148,4 +148,22 @@ Run two containers on the default bridge — can they ping each other by IP?
 
             - docker exec -it container1 ping <ip_address>
 
+## Task 5: Custom Networks
 
+Create a custom bridge network called my-app-net
+
+    - docker network create --driver bridge my-app-net
+
+Run two containers on my-app-net
+
+    - docker run -dit --name containerA --network my-app-net busybox sh
+    - docker run -dit --name containerB --network my-app-net busybox sh
+
+Can they ping each other by name now?
+
+    - docker exec -it containerA ping containerB
+      = it's work
+      
+Write in your notes: Why does custom networking allow name-based communication but the default bridge doesn't?
+
+    -  custom networks add Docker’s DNS service, so containers can talk by name. The default bridge is more limited and only supports IP‑based communication.
