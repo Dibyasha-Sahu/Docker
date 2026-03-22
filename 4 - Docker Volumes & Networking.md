@@ -74,7 +74,7 @@ Run a brand new container with the same volume
 
 Is the data still there?
 
-    - Yes , because ew save the data inside the volume , so when the container got deleted it still show the data
+    - Yes , because we save the data inside the volume , so when the container got deleted it still show the data
 
 
 ## Task 3: Bind Mounts
@@ -114,8 +114,38 @@ Edit the index.html on your host — refresh the browser
 
 Bind mounts → You manage the storage, good for live editing (web development).
 
-Task 4: Docker Networking Basics
+## Task 4: Docker Networking 
+
 List all Docker networks on your machine
+
+      - docker network ls
+
+     = bridge → the default network for containers.
+
+       host → shares the host’s network stack.
+      
+       none → isolates containers completely.
+       
 Inspect the default bridge network
+
+    - docker network inspect bridge
+    
 Run two containers on the default bridge — can they ping each other by name?
+
+    - docker run -dit --name container1 busybox sh
+    - docker run -dit --name container2 busybox sh
+
+    => Ping means when you are in one container and from here you send some message like "hello" to another container and another one recive and send the   reply than it's reachable
+
+    - docker exec -it container1 ping container2
+    
 Run two containers on the default bridge — can they ping each other by IP?
+
+
+      - First we have to find out the ip address of container 2 to make reach our message
+
+           - docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container2
+
+            - docker exec -it container1 ping <ip_address>
+
+
